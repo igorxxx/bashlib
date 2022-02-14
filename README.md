@@ -1,9 +1,19 @@
-# bashlib
+Bash Lib
+=========================
+
+
+Набор функций для bash скриптов
+
+
+УСТАНОВКА
+------------
+Скачать с сайта Github
+
 Library bash utils
 Библиотека для бакапов и синхронизации папок
 
- ** Установка всех необходимых компонентов 
- install_backup_lib
+Установка всех необходимых компонентов 
+ `install_backup_lib`
 
  Синхронизация папок
 sync_folder <source> <destination> <exclude file>

@@ -50,6 +50,7 @@ function gpg_encode {
 
 function sync_folder {
  [ ${3:- '-' } == '-' ] && EXC='NO' ||EXC='--exclude-from '$3
+  mkdirp $2
   rsync -azqrl $EXC $1 $2
   # echo "rsync -azqrl $EXC $1 $2"
 }
