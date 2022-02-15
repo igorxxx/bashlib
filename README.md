@@ -9,7 +9,7 @@ Bash Lib
 ------------
 Скачать с сайта Github
 ```shell
-    wget -c https://github.com/igorxxx/bashlib/archive/refs/heads/master.tar.gz -O - | tar -xz
+    wget -c https://github.com/igorxxx/bashlib/tarball/master -O - | tar -xvzf
 ```
 
 Library bash utils
