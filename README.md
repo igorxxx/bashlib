@@ -8,8 +8,8 @@ Bash Lib
 УСТАНОВКА
 ------------
 Скачать с сайта Github
-```shell
-    wget -c https://github.com/igorxxx/bashlib/tarball/master -O - | tar -xvzf
+```console
+    $git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
 ```
 
 Library bash utils
