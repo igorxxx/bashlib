@@ -8,6 +8,9 @@ Bash Lib
 УСТАНОВКА
 ------------
 Скачать с сайта Github
+```shell
+    wget -c https://github.com/igorxxx/bashlib/archive/refs/heads/master.tar.gz -O - | tar -xz
+```
 
 Library bash utils
 Библиотека для бакапов и синхронизации папок
