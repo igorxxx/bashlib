@@ -8,8 +8,8 @@ Bash Lib
 УСТАНОВКА
 ------------
 Скачать с сайта Github
-```console
-    $git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
+```bash
+    git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
 ```
 
 Library bash utils
