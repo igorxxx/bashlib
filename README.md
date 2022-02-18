@@ -7,7 +7,7 @@ Bash Lib
 
 УСТАНОВКА
 ------------
-Скачать с сайта Github
+Скачать с сайта Github 
 ```bash
     git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
 ```
