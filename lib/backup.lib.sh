@@ -13,6 +13,17 @@
 #  $3<exclude file> Файл с исключениями
 #  Пример:
 #  sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt 
+
+#  ** Синхронизация папок по ssh
+#  sync_folder_ssh <source> <login@host> <port> <destination> <exclude file>
+#  $1<source> Папка источник
+#  $2<login@host> Адрес сервера ssh
+#  $3<port> Порт сервера ssh
+#  $4<destination> Папка назначение
+#  $5<exclude file> Файл с исключениями
+#  Пример:
+#  sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt
+
 #
 #   ** Арихвирование папок
 #   pack_folder <source> <folder> <tar arhive> <password>
@@ -51,8 +62,17 @@ function gpg_encode {
 function sync_folder {
  [ ${3:- '-' } == '-' ] && EXC='NO' ||EXC='--exclude-from '$3
   mkdirp $2
-  rsync -azqrl $EXC $1 $2
+  rsync -azqrl $EXC $1 $2 --delete-excluded
   # echo "rsync -azqrl $EXC $1 $2"
+}
+
+
+function sync_folder_ssh {
+ rsync -avz --no-links --stats -e  "ssh -p $3 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress $1 $2:$4 --exclude-from $5 --delete-excluded
+}
+
+function md5_folder {
+  find $1 -type f -print0 |  xargs -0 md5sum |  md5sum | sed -r 's/ .+//'
 }
 
 function mkdirp {
