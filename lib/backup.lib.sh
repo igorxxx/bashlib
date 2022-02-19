@@ -81,12 +81,29 @@ function mkdirp {
    fi
 }
 
+
+# shellcheck disable=SC2120
 function pack_folder {
    mkdirp $3 
    pushd $1
    tar -zcpf $3$4 $2
-   gpg_encode $3$4 $5
+   if [ "$5" ]; then
+      gpg_encode $3$4 $5
+   fi
    popd
+}
+
+function pack_dir {
+  local SOURCE_PATH=$(dirname "$1")
+  local SOURSE_DIR=$(basename "$1")
+  local ARH_PATH=$(dirname "$2")
+  mkdirp $ARH_PATH
+  pushd $SOURCE_PATH || return 1
+  tar -zcpf $2 $SOURSE_DIR
+  if [ "$3" ]; then
+      gpg_encode $2 $3
+  fi
+  popd || return 1
 }
 
 
@@ -117,6 +134,20 @@ function clear_cache_davfs {
 function gpg_encode {
   echo $2 | gpg --batch --yes --passphrase-fd 0 -c $1
   rm $1
+}
+
+function pack_is_change {
+# $1 <source>
+# $2 <file.md5>
+# $3 <path_backup>
+# $4 <gpg password>
+
+MD5=$(md5_folder $1)
+
+if [ ! -f $2 ] || [[ $MD5 != $(cat $2) ]]; then
+ pack_dir $1 $3 $4
+fi
+echo $MD5 | tee $2
 }
 
 # sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt
