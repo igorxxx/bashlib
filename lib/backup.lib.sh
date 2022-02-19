@@ -99,7 +99,7 @@ function pack_dir {
   local ARH_PATH=$(dirname "$2")
   mkdirp $ARH_PATH
   pushd $SOURCE_PATH || return 1
-  tar -zcpf $2 $SOURSE_DIR
+  tar -cpzf $2 $SOURSE_DIR
   if [ "$3" ]; then
       gpg_encode $2 $3
   fi
