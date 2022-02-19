@@ -141,10 +141,11 @@ function pack_is_change {
 # $2 <file.md5>
 # $3 <path_backup>
 # $4 <gpg password>
-
+echo "Check md5 $1"
 MD5=$(md5_folder $1)
 
 if [ ! -f $2 ] || [[ $MD5 != $(cat $2) ]]; then
+ echo "Pack $1"
  pack_dir $1 $3 $4
 fi
 echo $MD5 | tee $2
