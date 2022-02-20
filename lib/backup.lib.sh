@@ -68,7 +68,7 @@ function sync_folder {
 
 function sync_folder_include {
   mkdirp $2
-  rsync -azrl $EXC $1 $2 --delete-excluded --exclude='*' --include-from $3
+  rsync -azrl $EXC $1 $2 --delete-excluded --include-from $3
 
 }
 
