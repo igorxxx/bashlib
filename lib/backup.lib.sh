@@ -62,10 +62,13 @@ function gpg_encode {
 function sync_folder {
  [ ${3:- '-' } == '-' ] && EXC='NO' ||EXC='--exclude-from '$3
   mkdirp $2
-  rsync -azqrl $EXC $1 $2 --delete-excluded
-  # echo "rsync -azqrl $EXC $1 $2"
+  rsync -azrl $EXC $1 $2 --delete-excluded
 }
 
+function sync_folder_include {
+  mkdirp $2
+  rsync -azrl $EXC $1 $2 --delete-excluded --include-from $3
+}
 
 function sync_folder_ssh {
  rsync -avz --no-links --stats -e  "ssh -p $3 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress $1 $2:$4 --exclude-from $5 --delete-excluded
