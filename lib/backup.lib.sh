@@ -63,13 +63,11 @@ function sync_folder {
  [ ${3:- '-' } == '-' ] && local EXC='' || local EXC='--exclude-from '$3
   mkdirp $2
   rsync -azrl $EXC $1 $2 --delete-excluded
-
 }
 
 function sync_folder_include {
   mkdirp $2
   rsync -azrlm $1 $2 --delete-excluded --include-from $3 --exclude '*'
-
 }
 
 function sync_folder_ssh {
