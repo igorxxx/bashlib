@@ -14,7 +14,7 @@ function ssh_tunnel_R {
       echo  "Done $1->$2 $4"
     else
        echo "Restart Connect $1->$2 $4"
-       pkill -f -x $CMD
+       pkill -f -x "$CMD"
        $CMD
     fi
 }
