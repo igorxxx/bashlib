@@ -60,7 +60,7 @@ function gpg_encode {
 
 
 function sync_folder {
- [ ${3:- '-' } == '-' ] && local EXC='NO' || local EXC='--exclude-from '$3
+ [ ${3:- '-' } == '-' ] && local EXC='' || local EXC='--exclude-from '$3
   mkdirp $2
   rsync -azrl $EXC $1 $2 --delete-excluded
 

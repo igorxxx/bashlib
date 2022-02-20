@@ -9,25 +9,54 @@ Bash Lib
 ------------
 Скачать с сайта Github 
 ```bash
-    git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
+git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
+```
+Запустить установку 
+```bash
+cd lib
+```
+```bash
+./install
 ```
 
-Library bash utils
+Библиотека backup.lib.sh
+-----------
 Библиотека для бакапов и синхронизации папок
+Подключение
+```bash
+. /root/lib/backup.lib.sh
+```
 
-Установка всех необходимых компонентов 
- `install_backup_lib`
+<span style='color:brown'>**install_backup_lib**</span>
+</br>Установка всех необходимых компонентов
 
- Синхронизация папок
-sync_folder <source> <destination> <exclude file>
-$1<source> Папка источник
-$2<destination> Папка назначение
-$3<exclude file> Файл с исключениями
 Пример:
+```bash
+install_backup_lib
+```
+
+<span style='color:brown;'>**sync_folder** {source} {destination} {exclude file}</span>
+</br>Синхронизация папок c файлом списка исключений
+- ***$1 {source}*** Папка источник
+- ***$2 {destination}*** Папка назначение
+- ***$3 {exclude file}*** Файл со списком исключений *(не обязательно)*
+
+Пример:
+```bash
+sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt 
+```
 
 
-  sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt 
+<span style='color:brown;'>**sync_folder_include** {source} {destination} {exclude file}</span>
+</br>Синхронизация папок c файлом списка только включаемых файлов
+- ***$1 {source}*** Папка источник
+- ***$2 {destination}*** Папка назначение
+- ***$3 {exclude file}*** Файл со списком включенных файлов
 
+Пример:
+```bash
+sync_folder_include /root /var/backup/ /root/bin/conf/backup/include_root.txt 
+```
 
 
    ** Арихвирование папок
