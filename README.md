@@ -13,10 +13,7 @@ wget -O - https://github.com/igorxxx/bashlib/tarball/master | tar xz --strip-com
 ```
 Запустить установку 
 ```bash
-cd lib
-```
-```bash
-./install
+cd lib && chmod u+x install && ./install
 ```
 
 Библиотека backup.lib.sh
