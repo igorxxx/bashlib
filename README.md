@@ -9,7 +9,7 @@ Bash Lib
 ------------
 Скачать с сайта Github 
 ```bash
-git clone https://github.com/igorxxx/bashlib --depth 1 --branch=master ./
+wget -O - https://github.com/igorxxx/bashlib/tarball/master | tar xz --strip-components=1
 ```
 Запустить установку 
 ```bash

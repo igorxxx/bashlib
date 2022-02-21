@@ -1,0 +1,2 @@
+#!/bin/bash
+wget -O - https://github.com/igorxxx/bashlib/tarball/master | tar xz --strip-components=1
