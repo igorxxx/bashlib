@@ -104,6 +104,7 @@ function pack_dir {
   pushd $SOURCE_PATH || return 1
   tar -cpzf $2 $SOURSE_DIR
   if [ "$3" ]; then
+      echo "Encode $1"
       gpg_encode $2 $3
   fi
   popd || return 1
