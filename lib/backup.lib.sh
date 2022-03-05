@@ -80,6 +80,7 @@ function md5_folder {
 
 function mkdirp {
    if [ ! -d "$1" ]; then
+      echo "Create $1"
       mkdir -p $1
    fi
 }
@@ -101,13 +102,13 @@ function pack_dir {
   local SOURSE_DIR=$(basename "$1")
   local ARH_PATH=$(dirname "$2")
   mkdirp $ARH_PATH
-  pushd $SOURCE_PATH || return 1
+  pushd $SOURCE_PATH >/dev/null || return 1
   tar -cpzf $2 $SOURSE_DIR
   if [ "$3" ]; then
       echo "Encode $1"
       gpg_encode $2 $3
   fi
-  popd || return 1
+  popd >/dev/null || return 1
 }
 
 
@@ -152,7 +153,7 @@ if [ ! -f $2 ] || [[ $MD5 != $(cat $2) ]]; then
  echo "Pack $1"
  pack_dir $1 $3 $4
 fi
-echo $MD5 | tee $2
+echo $MD5 >$2
 }
 
 # sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt
