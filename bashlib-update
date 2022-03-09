@@ -3,5 +3,5 @@ DIR=$(dirname $0)
 pushd $DIR
 wget -O - https://github.com/igorxxx/bashlib/tarball/master | tar xz --strip-components=1
 chmod u+x bashlib-update
-chmod u+x lib/install
+find utils/ -type f -exec chmod 644 {} \;
 popd

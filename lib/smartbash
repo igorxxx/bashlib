@@ -1,0 +1,22 @@
+#!/bin/bash
+# install : usermod -s /usr/local/sbin/smartbash username
+# trap '' 2 20 24
+
+function testport {
+  if (netcat -w3 -z 127.0.0.1 "$1"); then
+     echo "ONLINE"
+   else
+      echo "OFFLINE"
+   fi
+}
+
+ACTION="$(cut -d' ' -f1 <<<"${2}")"
+PORT="$(cut -d' ' -f2 <<<"${2}")"
+case $ACTION in
+        'testport') testport $PORT;
+        ;;
+        *) echo "Hello"
+        ;;
+esac
+
+exit 0
