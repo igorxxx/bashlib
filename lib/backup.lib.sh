@@ -60,7 +60,14 @@ function gpg_encode {
 
 
 function sync_folder {
- [ ${3:- '-' } == '-' ] && local EXC='' || local EXC='--exclude-from '$3
+ if [ ${3:- '-' } == '-' ]; then
+   local EXC=''
+ else
+   if [ ! -f "$3" ]; then
+       touch $3
+     fi
+   local EXC='--exclude-from '$3
+ fi
   mkdirp $2
   rsync -azrl $EXC $1 $2 --delete-excluded
 }
@@ -71,7 +78,8 @@ function sync_folder_include {
 }
 
 function sync_folder_ssh {
- rsync -avz --no-links --stats -e  "ssh -p $3 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress $1 $2:$4 --exclude-from $5 --delete-excluded
+ [ ${3:- '-' } == '-' ] && local PORT='' || local PORT='-p '$3
+ rsync -avz --no-links --stats -e  "ssh $PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress $1 $2:$4 --exclude-from $5 --delete-excluded
 }
 
 function md5_folder {

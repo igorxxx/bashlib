@@ -5,7 +5,7 @@ PATH_BIN="/usr/local/sbin"
 DIR=$(dirname $0)
 pushd $DIR
 cp ../lib/smartbash $PATH_BIN/
-chmod u+x $PATH_BIN/smartbash
+chmod +x $PATH_BIN/smartbash
 
 if [ "$1" ]; then
    usermod -s /usr/local/sbin/smartbash $1
