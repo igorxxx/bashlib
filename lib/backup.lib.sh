@@ -64,6 +64,7 @@ function sync_folder {
    local EXC=''
  else
    if [ ! -f "$3" ]; then
+       mkdir -p "$(dirname "$3")"
        touch $3
        echo "Create file exclude $3"
        echo "Skip sync $1"
