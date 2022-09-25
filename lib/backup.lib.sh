@@ -65,6 +65,9 @@ function sync_folder {
  else
    if [ ! -f "$3" ]; then
        touch $3
+       echo "Create file exclude $3"
+       echo "Skip sync $1"
+       return
      fi
    local EXC='--exclude-from '$3
  fi
