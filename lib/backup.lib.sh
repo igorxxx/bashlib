@@ -78,6 +78,13 @@ function sync_folder {
 
 function sync_folder_include {
   mkdirp $2
+  if [ ! -f "$3" ]; then
+      mkdir -p "$(dirname "$3")"
+      touch $3
+      echo "Create file include $3"
+      echo "Skip sync $1"
+      return
+  fi
   rsync -azrlm $1 $2 --delete-excluded --include-from $3 --exclude '*'
 }
 
