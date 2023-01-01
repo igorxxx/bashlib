@@ -1,8 +1,10 @@
 #!/bin/bash
 PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c25)
-useradd -p $PASSWORD -m $1
+HOSTNAME=$(cat /etc/hostname)
+# useradd -p $PASSWORD -m $1
 echo '***********************'
 echo 'Create new user'
 echo "User: $1"
 echo "Pass: $PASSWORD"
+echo "ssh-copy-id "$1"@"$HOSTNAME
 echo "***********************"
