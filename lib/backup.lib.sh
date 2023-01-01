@@ -48,6 +48,15 @@
 #    $4<base>
 #    $5<filename> - sql.gz
 #
+
+#    **  Восстановление базы mysql
+#    mysql_restore <user> <host> <passwd> <base> <filename>
+#    $1<user>
+#    $2<host>
+#    $3<passwd>
+#    $4<base>
+#    $5<filename> - sql.gz
+
 #    ** Шифрование файла
 #    gpg_encode <filename> <password>
 #    $1<filename> - Файл для шифрования (заменяется на filename.gpg)
@@ -149,6 +158,17 @@ function mysql_backup {
  # local CODEPAGE = "--default-character-set=cp1251"
  local CODEPAGE=${6:-""}
  mysqldump --user=$1 --host=$2 -acnqQ --verbose --single-transaction $CODEPAGE --password=$3 -- $4 | sed "s#^CREATE TABLE#\0 IF NOT EXISTS# ; s#^INSERT INTO#REPLACE INTO#" | gzip -qf9c >  $5
+}
+
+function mysql_restore {
+  #    **  Восстановление базы mysql
+  #    mysql_restore <user> <host> <passwd> <base> <filename>
+  #    $1<user>
+  #    $2<host>
+  #    $3<passwd>
+  #    $4<base>
+  #    $5<filename> - sql.gz
+  gunzip < $5 | mysql -u $1 -p$3 $4
 }
 
 function clear_cache_davfs {
