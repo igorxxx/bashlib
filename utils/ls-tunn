@@ -1,0 +1,2 @@
+#!/bin/bash
+ lsof -n -P |  grep IPv4 | grep sshd | grep LISTEN | grep 127.0.0.1
