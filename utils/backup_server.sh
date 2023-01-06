@@ -6,6 +6,9 @@
 
 # Путь дл WebDav Папки
 WEBDAV_URL1=http://localhost:4080/cloud/remote.php/dav/files/user
+# Дополнить файл /etc/davfs2/secrets
+# "http://localhost:4080/cloud/remote.php/dav/files/user"        user          "password"
+
 # Путь до папки с архивом в WebDav
 WEBDAV_PATH='/mnt/webdav1/backup/'
 # Пароль для архива
