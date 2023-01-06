@@ -6,6 +6,8 @@
 
 # Путь дл WebDav Папки
 WEBDAV_URL1=http://localhost:4080/cloud/remote.php/dav/files/user
+# Путь до папки с архивом в WebDav
+WEBDAV_PATH='/mnt/webdav1/backup/'
 # Пароль для архива
 GPG_PASS='123123'
 
@@ -97,7 +99,7 @@ function sync_folders {
 }
 
 function to_cloud {
-   rsync -azrl $PATH_BACKUP_SYNC/* /mnt/webdav1/backup/
+   rsync -azrl $PATH_BACKUP_SYNC/* $WEBDAV_PATH
    rm -r $PATH_BACKUP_SYNC/*
 }
 
