@@ -5,7 +5,7 @@ function test-url {
 }
 
 function test_if() {
-ip link show $1 | grep -q 'state $2'
+ip link show $1 | grep 'state $2'
 }
 
 # $1 A - Add D - Delete
