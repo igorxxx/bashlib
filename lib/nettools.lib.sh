@@ -4,7 +4,7 @@ function test-url {
     curl -Is https://pctuner.club | head -n 1
 }
 
-function test-if() {
+function test_if() {
 ip link show $1 | grep -q 'state $2'
 }
 
