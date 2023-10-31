@@ -69,16 +69,49 @@ pack_dir /var/data  /var/backup/data.tgz password
 **pack_is_change** `{source}` `{file.md5}` `{archive}` `{gpg}` 
 <br> Архивирование папки если изменился хеш md5 
 
-- `$1 <source>` Путь до папки 
-- `$2 <file.md5>` Файл с хешем md5 (создается автоматически)
-- `$3` {archive} Файл архива
+- `$1 {source}` Путь до папки 
+- `$2 {file.md5}` Файл с хешем md5 (создается автоматически)
+- `$3 {archive}` Файл архива
 - `$4 {gpg}` Пароль GPG для шифрования *(не обязательно)*
 
 Пример:
 ```bash
 pack_is_change /var/data /var/data/data.md5 /var/backup/data.tgz password 
 ```
+---
+**gpg_encode** `{filename}` `{password}`
+<br> Шифрование файла
 
+- `$1 {filename>}` - Файл для шифрования (заменяется на filename.gpg)
+- `$2 {passord}` - Пароль для шифрования
+
+Пример:
+```bash
+gpg_encode /path/filename 'password' 
+```
+---
+**gpg_decode** `{filename}` `{password}`
+<br> Расшифровка файла
+
+- `$1 {filename}` - Файл для расшифровки (должен быть .gpg)
+- `$2 {password}` - Пароль для шифрования
+- `Output` - отдает имя расшифрованного файла в случае удачи
+<br>Расшифровывает файл, если он существует и имеет расширение .gpg
+<br>При успехе отдает имя расшифрованного файла, зашифрованый файл удаляется 
+
+Пример:
+```bash
+# Вызываем функцию с файлом secret.gpg и паролем qwerty и сохраняем результат в переменную decrypted_file
+decrypted_file=$(decrypt_gpg_file secret.gpg qwerty)
+# Проверяем, что переменная decrypted_file не пустая
+if [[ -n "$decrypted_file" ]]; then
+  cat "$decrypted_file"
+else
+# Иначе выводим сообщение об ошибке на экран
+  echo "Не удалось расшифровать файл"
+fi
+```
+---
     ** Подключение папки WebDav
     mount_webdav <path> <url>
     $1<path> - путь монтирования папки
@@ -92,7 +125,4 @@ pack_is_change /var/data /var/data/data.md5 /var/backup/data.tgz password
     $4<base>
     $5<filename> - sql.gz
 
-    ** Шифрование файла
-    gpg_encode <filename> <password>
-    $1<filename> - Файл для шифрования (заменяется на filename.gpg)
-    $2<passord> - Пароль для шифрования
+  

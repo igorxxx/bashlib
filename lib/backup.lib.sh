@@ -58,15 +58,36 @@
 #    $5<filename> - sql.gz
 
 #    ** Шифрование файла
-#    gpg_encode <filename> <password>
-#    $1<filename> - Файл для шифрования (заменяется на filename.gpg)
-#    $2<passord> - Пароль для шифрования
+#    $1<filename> $2<password>
 
 function gpg_encode {
 	echo $2 | gpg --batch --yes --passphrase-fd 0 -c $1
 	rm $1
 }
+#   ** расшифровка файла
+#    gpg_decode <filename> <password>
 
+
+function gpg_decode {
+   # Проверяем, что файл существует и имеет расширение .gpg
+   if [[ -f "$1" && "$1" == *.gpg ]]; then
+     # Удаляем расширение .gpg из имени файла
+     filename="${1%.gpg}"
+     # Расшифровываем файл с помощью gpg и пароля $2
+     gpg --batch --passphrase "$2" -o "$filename" -d "$1"
+     # Проверяем, что расшифровка прошла успешно
+     if [[ $? -eq 0 ]]; then
+       # Если расшифровка успешна, возвращаем имя расшифрованного файла с помощью echo
+       echo "$filename"
+     else
+       # Если расшифровка неуспешна, возвращаем пустую строку с помощью echo
+       echo ""
+     fi
+   else
+      # Если файл не существует или не имеет расширения .gpg, возвращаем пустую строку с помощью echo
+      echo ""
+    fi
+}
 
 function sync_folder {
  if [ ${3:- '-' } == '-' ]; then
