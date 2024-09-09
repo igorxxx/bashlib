@@ -89,33 +89,45 @@ function gpg_decode {
     fi
 }
 
+function create_file_if_not_exists {
+  mkdir -p "$(dirname "$1")"
+  touch $1
+  echo "Create file include $1"
+  echo "Skip sync $2"
+}
+
+
 function sync_folder {
  if [ ${3:- '-' } == '-' ]; then
    local EXC=''
  else
-   if [ ! -f "$3" ]; then
-       mkdir -p "$(dirname "$3")"
-       touch $3
-       echo "Create file exclude $3"
-       echo "Skip sync $1"
+    if [ ! -f "$3" ]; then
+       create_file_if_not_exists $3 $1
        return
-     fi
+    fi
    local EXC='--exclude-from '$3
  fi
   mkdirp $2
   rsync -azrl $EXC $1 $2 --delete-excluded
 }
 
+
 function sync_folder_include {
   mkdirp $2
   if [ ! -f "$3" ]; then
-      mkdir -p "$(dirname "$3")"
-      touch $3
-      echo "Create file include $3"
-      echo "Skip sync $1"
-      return
+     create_file_if_not_exists $3 $1
+     return
   fi
-  rsync -azrlm $1 $2 --delete-excluded --include-from $3 --exclude '*'
+
+  if [ -z "$4" ]; then
+        rsync -azrlm $1 $2 --delete-excluded --include-from=$3 --exclude='*'
+    else
+       if [ ! -f "$4" ]; then
+          create_file_if_not_exists $4 $1
+          return
+      fi
+        rsync -azrlm $1 $2 --delete-excluded --include-from=$3 --exclude-from=$4 --exclude='*'
+  fi
 }
 
 function sync_folder_ssh {
