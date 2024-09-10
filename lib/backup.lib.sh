@@ -24,6 +24,12 @@
 #  Пример:
 #  sync_folder /root /var/backup/ /root/bin/conf/backup/exclude_root.txt
 
+# ** Удаление старых файлов
+# delete_old_files $1 $2
+#  $1 - Папка с файлами
+#  $2  - Количество дней
+#  $3 - Маска ( по умолчанию *.*)
+
 #
 #   ** Арихвирование папок
 #   pack_folder <source> <folder> <tar arhive> <password>
@@ -133,6 +139,25 @@ function sync_folder_include {
 function sync_folder_ssh {
  [ ${3:- '-' } == '-' ] && local PORT='' || local PORT='-p '$3
  rsync -avz --no-links --stats -e  "ssh $PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress $1 $2:$4 --exclude-from $5 --delete-excluded
+}
+
+delete_old_files() {
+
+  local directory=$1
+  local days=$2
+  local mask=$3
+
+    # Проверка существования папки
+    if [[ ! -d "$directory" ]]; then
+      echo "Папка $directory не существует."
+      return 1
+    fi
+
+    if [[ -z "$mask" ]]
+        mask='*.*'
+    fi
+
+  find "$directory" -type f -name "$mask" -mtime +"$days" -exec rm -f {} \;
 }
 
 function md5_folder {
