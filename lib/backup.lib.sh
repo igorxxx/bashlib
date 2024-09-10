@@ -153,7 +153,7 @@ delete_old_files() {
       return 1
     fi
 
-    if [[ -z "$mask" ]]
+    if [[ -z "$mask" ]]; then
         mask='*.*'
     fi
 
