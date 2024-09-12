@@ -132,7 +132,7 @@ function sync_folder_include {
           create_file_if_not_exists $4 $1
           return
       fi
-        rsync -azrlm $1 $2 --delete-excluded --exclude-from=$4 --include-from=$3 --exclude='*'
+        rsync -azrlm $1 $2 --delete-excluded --exclude-from=$4 --include-from=$3 --include='*/' --exclude='*'
   fi
 }
 
