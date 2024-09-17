@@ -239,7 +239,7 @@ function mysql_restore {
           # Создание базы данных заново
           mysql -h $host -u $user -p$pass -e "CREATE DATABASE $base;"
           # Импорт данных
-          gunzip < $filename | mysql --verbose -h $host -u $user -p$pass $base
+          gunzip < $filename | mysql --show-warnings -h $host -u $user -p$pass $base
     else
         echo "Ошибка: файл $filename не найден. Восстановление базы данных отменено."
     fi
