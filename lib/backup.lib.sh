@@ -132,6 +132,7 @@ function sync_folder_include {
           create_file_if_not_exists $4 $1
           return
       fi
+      
         rsync -azrlm $1 $2 --delete-excluded --exclude-from=$4 --include-from=$3 --include='*/' --exclude='*'
   fi
 }
@@ -226,7 +227,22 @@ function mysql_restore {
   #    $3<passwd>
   #    $4<base>
   #    $5<filename> - sql.gz
-  gunzip < $5 | mysql -u $1 -p$3 $4
+   # Локальные переменные
+    local user=$1
+    local host=$2
+    local pass=$3
+    local base=$4
+    local filename=$5
+    if [ -f "$filename" ]; then
+       # Удаление базы данных
+          mysql -h $host -u $user -p$pass -e "DROP DATABASE $base;"
+          # Создание базы данных заново
+          mysql -h $host -u $user -p$pass -e "CREATE DATABASE $base;"
+          # Импорт данных
+          gunzip < $filename | mysql --verbose -h $host -u $user -p$pass $base
+    else
+        echo "Ошибка: файл $filename не найден. Восстановление базы данных отменено."
+    fi
 }
 
 function clear_cache_davfs {
